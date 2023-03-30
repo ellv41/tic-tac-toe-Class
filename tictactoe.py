@@ -1,116 +1,82 @@
 import random
 from Classes import *
 
+########## main ######
 
-def computer_play(plyer,empty_i):
-    pos = -1
-    #crate a list postions of all empty squers 
-    r1,c1 = board.find_win_bloc_move(plyer)
-    if pos == -1: pos = random.choice(empty_i)
-    return pos
+print(f'\nGame Tic Tac Toe\n')
 
+# opponent = input("for playing against  computer press C : ").upper()
+# if opponent == 'C':
+#     player1 = Player("compi",'C', 'O')
+#     print(player1)
+# else:
+#     name = input("player 1 enter your Name : ")
+#     player1 = Player(name,'H', 'X')
+#     print(player1)
+# name = input("player 2 enter your Name : ")
+# player2 = Player(name,'H', 'O')
+# print(player2)
 
-def play_move(c_plyer, bord):
-    legal = False
-    index = -1
-    s_size = [str(x+1) for x in range(bord.size+1)] 
-    if opponent == COMPUTER:
-        row, col = computer_play(plyer,bord.empty)
-    else:
-        while not legal:
-            row = input(f'select row number  1-{bord.size} : ')
-            col = input(f'select col number  1-{bord.size} : ')
-            if row.isnumeric() and col.isnumeric() and row in s_size and col in s_size:
-                row = int(row) - 1 
-                col = int(col) - 1
-                if bord.play_move(player.icon,row,col):
-                    legal = True
-                else:
-                    print(f'select an empty place')
+player1 = Player("compi",'C', 'O')
+player2 = Player("ELI",'H', 'X')
+
+bord_size = input("select bord size  3  or 4  or 5 if you dare : ")
+bord_size = int(bord_size) if bord_size.isnumeric()  else 3
+
+# Games loop
+while True:
+    player = random.choice(PLAYER_ICON)
+    player = player1 if player == player1.icon else player2
+    game_over = False
+    game1 = GameBord(bord_size)
+    s_size = [str(x + 1) for x in range(game1.size + 1)]
+    game_status = 0
+# Single Game Loop
+    while not game_over:
+        disp_board(game1)
+        # print(game1.game_map)
+        # print(game1.game_sqrs)
+        print(game1.empty_i)
+        if len(game1.empty_i) > 0:
+            if player.type == 'C':
+                r1, c1 = game1.find_win_bloc_move(player.icon)
+                if r1 == None:
+                    pos = random.choice(game1.empty_i)
+                    r1 = pos[0]  
+                    c1 = pos[1]
+                game1.play_move(player.icon, r1, c1)
             else:
-                if row in ('X', 'x') or col in ('X', 'x'):
-                    return -1
-                print(f'enter only numbers 1-{bord.size}')
+                print(f'player {player.name} your turn')
                 legal = False
-
-
-########### main ######
-
-player1 = Player("compi",'C', 'X')
-player2 = Player("eli", 'H', 'O')
-game1 = GameBord(3)
-
-print(player1)
-game1.play_move(player1.icon,1,1)
-
-print('\n\n\n\n')
-del game1
-game2 = GameBord(4)
-print(game2)
-
-
-# player = PLAYER1
-# opponent1 = input("for first opponent computer press C : ").upper()
-# opponent2 = input("for first opponent computer press C : ").upper()
-
-# # Games loop
-# while True:
-#     player = random.choice([PLAYER1,PLAYER2])
-#     # player = PLAYER1
-#     game_over = False
-#     # start the game first move is  played by X (C)
-#     reset_board()
-#     game_status = 0
-#     player_opens = player 
-#     if player == PLAYER1: x_opens += 1
-# # Single Game Loop        
-#     while not game_over:
-#         if display_lvl == 3:
-#             print_bord()
-#             print(f'player {player} your turn')
-#         if GAME_BOARD.count(FREE_SPC) > 0:
-#             if player == PLAYER1:
-#                 game_status = play_move(player, opponent1)
-#                 player = PLAYER2
-#             else:
-#                 game_status = play_move(player, opponent2)
-#                 player = PLAYER1
-#             if game_status in (PLAYER1, PLAYER2):
-#                 if game_status == PLAYER1:
-#                     win_x += 1
-#                 else:
-#                     win_O += 1    
-#                 if display_lvl == 3:    
-#                     print_bord()
-#                     print(f'\n ****** And the Winner is ********* player-{game_status}')
-#                 game_over = True
-#         else:
-#             if display_lvl == 3:
-#                 print_bord()
-#                 print(f'no more moves the board is full @@@@@@@ its a tie @@@@@@@@')                    
-#             no_winer += 1
-#             game_over = True
-#         if game_status == -1:    
-#             game_over = True
-#     grade_moves(game_status)
-#     GAME_DATA.clear()
-#     game += 1
-#     if not computer_playes:
-#         if input('want another game press Y : ').upper() != 'Y':
-#             break
-#     else:
-#         if display_lvl > 1:
-#             print_bord()
-#             print(f'\n Game Winer = {game_status} - player_opens = {player_opens}')
-#             print('\n***********************************************************')
-#             print(f'       END GMAE    Game :{game} of {num_games}')
-#             print('***********************************************************')
-#     if game >= num_games and computer_playes:
-#         break
-# print(f'\n**************** Games Sumery **************** \n\n Games Plyed = {num_games}\n')    
-# print(f'X wins  =  {win_x} - x opens = {x_opens} times \nO wins  =  {win_O}\nno_winer = {no_winer}\n')  
-# if computer_playes:
-#     input('to close the program press Enter : X')
-
-    
-# # end Main
+                index = -1
+                while not legal:
+                    row = input(f'select row number  1-{game1.size} : ')
+                    col = input(f'select col number  1-{game1.size} : ')
+                    if row.isnumeric() and col.isnumeric() and row in s_size and col in s_size:
+                        row = int(row) - 1
+                        col = int(col) - 1
+                        if game1.play_move(player.icon, row, col):
+                            legal = True
+                        else:
+                            print(f'select an empty place')
+                    else:
+                        print(f'enter only numbers 1-{game1.size}')
+                        legal = False
+            game_status = game1.check_bord(player.icon)
+            player = player1 if player == player2 else player2
+            if game_status in (PLAYER_ICON):
+                disp_board(game1)
+                print(f'\n ****** And the Winner is ********* player-{game_status}')
+                game_over = True
+        else:
+            disp_board(game1)
+            print(f'no more moves the board is full @@@@@@@ its a tie @@@@@@@@')
+            game_over = True
+    if input('want another game press Y : ').upper() != 'Y':
+        break
+    else:
+        game1.reset()
+        
+        
+  
+# end Main
