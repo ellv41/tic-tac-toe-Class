@@ -1,27 +1,41 @@
 import random
+from time import sleep
 from Classes import *
+
+
+# name = input("player 2 enter your Name : ")
+# player2 = Player(name,'H', 'O')
+# print(player2)
+
+# player1 = Player("compi",'C', 'O')
+# player2 = Player("ELI",'H', 'X')
+# bord_size = 3
 
 ########## main ######
 
 print(f'\nGame Tic Tac Toe\n')
 
-# opponent = input("for playing against  computer press C : ").upper()
-# if opponent == 'C':
-#     player1 = Player("compi",'C', 'O')
-#     print(player1)
-# else:
-#     name = input("player 1 enter your Name : ")
-#     player1 = Player(name,'H', 'X')
-#     print(player1)
-# name = input("player 2 enter your Name : ")
-# player2 = Player(name,'H', 'O')
-# print(player2)
+opponent = input("for playing against  computer press C : ").upper()
+if opponent == 'C':
+    player1 = Player("compi-1",'C', 'O')
+    print(player1)
+else:
+    name = input("player 1 enter your Name : ")
+    player1 = Player(name,'H', 'O')
+    print(player1)
 
-player1 = Player("compi",'C', 'O')
-player2 = Player("ELI",'H', 'X')
+opponent = input("for playing against  computer press C : ").upper()
+if opponent == 'C':
+    player2 = Player("compi-2",'C', 'X')
+    print(player2)
+else:
+    name = input("player 1 enter your Name : ")
+    player2 = Player(name,'H', 'X')
+    print(player2)
 
 bord_size = input("select bord size  3  or 4  or 5 if you dare : ")
 bord_size = int(bord_size) if bord_size.isnumeric()  else 3
+
 
 # Games loop
 while True:
@@ -36,7 +50,7 @@ while True:
         disp_board(game1)
         # print(game1.game_map)
         # print(game1.game_sqrs)
-        print(game1.empty_i)
+        # print(game1.empty_i)
         if len(game1.empty_i) > 0:
             if player.type == 'C':
                 r1, c1 = game1.find_win_bloc_move(player.icon)

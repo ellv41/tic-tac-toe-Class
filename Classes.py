@@ -68,7 +68,6 @@ class GameBord:
         self.game_map.append([y for y in range(0,self.size*self.size,self.size+1)])
         self.game_map.append([y for y in range(self.size-1,self.size*self.size -1,self.size-1)])
 
-
     def play_move(self, cur_plyr, row, col):
         move_success = False
         self.flat.clear()
@@ -90,22 +89,26 @@ class GameBord:
                 return cur_plyr
         return None
 
-
     def find_win_bloc_move(self,cur_plyr):
-        oppnt = PLAYER_ICON[0] if cur_plyr == PLAYER_ICON[1] else PLAYER_ICON[0]
+        oppnt = PLAYER_ICON[0] if cur_plyr == PLAYER_ICON[1] else PLAYER_ICON[1]
         for i , g1 in  enumerate(self.game_sqrs) :
             if g1.count(cur_plyr) == (self.size - 1) and g1.count(FREE_SPC) == 1:
-                return i , g1.index(FREE_SPC)
+                row = self.game_map[i][g1.index(FREE_SPC)] // self.size
+                col = self.game_map[i][g1.index(FREE_SPC)] % self.size
+                return row , col
         for i , g1 in  enumerate(self.game_sqrs) :
             if g1.count(oppnt) == (self.size - 1) and g1.count(FREE_SPC) == 1:
-                return i , g1.index(FREE_SPC)
+                row = self.game_map[i][g1.index(FREE_SPC)] // self.size
+                col = self.game_map[i][g1.index(FREE_SPC)] % self.size
+                return row , col
         return None, None
 
 # display Board genaral        
     
 def disp_board(bord:GameBord):
+    print(f'\nGame Tic Tac Toe\n')
     for row in range(bord.size):
         print(f' |  {"  |  ".join([sq for sq in bord.game_sqrs[row]])}  |')  
-        print(f'\n')
+        print('\n')
 
 
